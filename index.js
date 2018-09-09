@@ -64,7 +64,7 @@
         R.defaultTo({}),
         setDefault('resolve', true),
         setDefault('apply', true),
-        setDefault('once', false),
+        setDefault('once', false)
     );
     
     function applySpecP(data, args, options) {
@@ -107,7 +107,7 @@
             then(function(updateFns) {
                 if(errors.length) throwErrors(errors);
                 return applyUpdates(updateFns);
-            }),
+            })
         );
         
         return R.pipe(

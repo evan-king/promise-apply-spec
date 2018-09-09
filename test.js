@@ -150,7 +150,7 @@ describe('PromiseApplySpec', function() {
             const unreachedRejection = Promise.reject(realError);
             const failingData = R.pipe(
                 R.prepend({more: {props: Promise.reject(realError)}}),
-                R.append(Promise.reject(0)),
+                R.append(Promise.reject(0))
             )(testData);
             
             unreachedRejection.catch(id); // else our global hook will catch it
