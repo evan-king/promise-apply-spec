@@ -1,0 +1,52 @@
+{
+  "name": "promise-apply-spec",
+  "version": "1.0.0",
+  "description": "Reduce a data structure containing promises to a promise of the data structure containing the resolved values.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test.js",
+    "build": "mkdir -p dist && uglifyjs index.js --output dist/promise-apply-spec.min.js --compress --mangle --source-map",
+    "tag": "git tag v$npm_package_version && git push origin v$npm_package_version",
+    "prerelease": "[ -z \"$(git status --porcelain)\" ] || (>&2 echo 'ERROR: uncommitted work'; exit 1)",
+    "release": "npm run coverage && npm run build && npm run tag && npm publish",
+    "report": "nyc mocha test.js && nyc report --reporter=html",
+    "coverage": "nyc mocha test.js && nyc report --reporter=lcovonly",
+    "postcoverage": "nyc check-coverage --statements $npm_package_config_min_coverage --branches $npm_package_config_min_coverage --lines $npm_package_config_min_coverage"
+  },
+  "nyc": {
+    "include": [
+      "index.js"
+    ]
+  },
+  "config": {
+    "min_coverage": 100
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/evan-king/promise-apply-spec.git"
+  },
+  "keywords": [
+    "async",
+    "promise",
+    "utility",
+    "unravel",
+    "applySpec",
+    "ramda"
+  ],
+  "author": "Evan King",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/evan-king/promise-apply-spec/issues"
+  },
+  "homepage": "https://github.com/evan-king/promise-apply-spec#readme",
+  "dependencies": {
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.1",
+    "uglify-es": "^3.3.9"
+  }
+}

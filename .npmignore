@@ -1,0 +1,6 @@
+coverage/
+.travis.yml
+.testem.json
+.nyc_output/
+.npmignore
+build.js
