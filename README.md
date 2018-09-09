@@ -142,7 +142,7 @@ Get a new immutable Fluent with `options.apply` reconfigured.
 
 Get a new immutable Fluent with `options.resolve` reconfigured.
 
-#### Fluent.exec([spec[, args[, once]]]) ⇒ Promise(data)
+#### Fluent.exec([spec[, args[, once]]]) ⇒ Promise(data) | data
 
 Execute `applySpecP` with all arguments defaulting to the Fluent instance configuration.
 

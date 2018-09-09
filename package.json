@@ -1,6 +1,6 @@
 {
   "name": "promise-apply-spec",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Reduce a data structure containing promises to a promise of the data structure containing the resolved values.",
   "main": "index.js",
   "scripts": {
