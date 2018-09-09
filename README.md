@@ -86,13 +86,13 @@ applySpec({a: x => x+1}, [4]); // => {a: 5}
 ## API (traditional)
 
 ```javascript
-const applySpecP = require('promise-apply-spec');
+const { applySpecP } = require('promise-apply-spec');
 ```
 
 ### applySpecP(spec[, arg[, options]]) ⇒ Promise(data) | data
 
-The fully featured main function, provided as the default export with a traditional,
-data-first and non-curried signature.
+The fully featured main function &mdash; provided as both the default export and
+a named export &mdash; with a traditional, data-first and non-curried signature.
 
 **Params**:
   - **spec**: Object: any combination of nested arrays, raw (unclassed) objects,
