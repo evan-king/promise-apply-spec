@@ -95,8 +95,9 @@ The fully featured main function &mdash; provided as both the default export and
 a named export &mdash; with a traditional, data-first and non-curried signature.
 
 **Params**:
-  - **spec**: Object: any combination of nested arrays, raw (unclassed) objects,
-    functions, and Promises
+  - **spec**: Any: any combination of nested arrays, plain objects, functions,
+    promises, and other values ('other values' that look like plain objects
+    containing promises or functions will get recreated as truly plain objects)
     
   - **args**: Array: arguments to pass into invoked `spec` functions
   

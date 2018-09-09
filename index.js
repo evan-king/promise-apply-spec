@@ -15,6 +15,16 @@
     
     const id = x => x;
     const assign = Object.assign;
+    
+    const isObjectObject = obj => obj
+        && typeof obj == 'object'
+        && Array.isArray(obj) === false
+        && ''+obj == '[object Object]';
+
+    const isPlainObject = obj => isObjectObject(obj)
+        && typeof obj.constructor == 'function'
+        && isObjectObject(obj.constructor.prototype)
+        && obj.constructor.prototype.hasOwnProperty('isPrototypeOf');
 
     const throwErrors = R.converge(
         (msg, errs) => { throw assign(new Error(msg), {errors: errs}); },
@@ -25,8 +35,7 @@
         ),
         id]
     )
-
-    const setter = R.compose(R.set, R.lensPath);
+    
     const reporter = (list, path) => err => {
         if(R.is(Error, err)) err.path = path.join('.');
         list.push(err);
@@ -49,12 +58,11 @@
         );
         
         return R.cond([
-            [R.is(Function),     toFunctionItem],
-            [R.has('prototype'), R.always([])],
-            [R.is(Promise),      toPromiseItem],
-            [R.is(Array),        toChildItems(true)],
-            [R.is(Object),       toChildItems(false)],
-            [R.T,                R.always([])],
+            [R.is(Function),    toFunctionItem],
+            [R.is(Promise),     toPromiseItem],
+            [R.is(Array),       toChildItems(true)],
+            [isPlainObject,     toChildItems(false)],
+            [R.T,               R.always([])],
         ])(data);
     }
     
@@ -73,7 +81,10 @@
         if(!R.is(Array, args)) throw new TypeError('applySpecP args must be an array');
         options = setDefaults(options);
         
-        const wrap = options.resolve ? Promise.resolve.bind(Promise) : id;
+        const wrap = options.resolve
+            ? Promise.resolve.bind(Promise)
+            : id;
+        
         if(!data) return wrap(data);
         
         const next = options.once ? id : d => applySpecP(d, args, options);
@@ -97,9 +108,14 @@
                 throw ex;
             }
         };
-        const asyncUpdate = op => op.p.then(setter(op.path), reporter(errors, op.path));
+        const asyncUpdate = op => op.p.then(
+            R.set(R.lensPath(op.path)),
+            reporter(errors, op.path)
+        );
         const applyUpdates = R.reduce(R.applyTo, data);
-        const then = options.resolve ? fn => p => p.then(fn) : id;
+        const then = options.resolve
+            ? fn => p => p.then(fn)
+            : id;
         
         const resolvePromises = R.pipe(
             () => R.map(asyncUpdate, asyncOps),

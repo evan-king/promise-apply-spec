@@ -23,11 +23,18 @@ const tracked = test => function() {
     return Promise.all(checks);
 }
 
+function ClassyObject() {
+    this.classMethod = x => x;
+}
+
 
 describe('PromiseApplySpec', function() {
     const include = R.set(R.lensPath([1, 'a']));
     const wrap = Promise.resolve.bind(Promise);
+    const rgx = new RegExp('just hanging around');
     const twoPointTwo = R.always(2.2);
+    const item = new ClassyObject();
+    const seven = new Number(7);
     const three = () => 3;
     const id = x => x;
     
@@ -38,10 +45,16 @@ describe('PromiseApplySpec', function() {
             b: three,
             c: {d: [4, wrap(5), 6]},
         },
-        [wrap(7), 8],
+        null, true, rgx, item,
+        [wrap(seven), 'string']
     ];
     const promisedData = wrap(testData);
-    const outputData = [1, {a: 2, b: 3, c: {d: [4, 5, 6]}}, [7, 8]];
+    const outputData = [
+        1,
+        {a: 2, b: 3, c: {d: [4, 5, 6]}},
+        null, true, rgx, item,
+        [seven, 'string']
+    ];
     
     
     const extraPromises = {
