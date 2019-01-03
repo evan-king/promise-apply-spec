@@ -1,6 +1,6 @@
 {
   "name": "promise-apply-spec",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Reduce a data structure containing promises to a promise of the data structure containing the resolved values.",
   "main": "index.js",
   "scripts": {
@@ -40,13 +40,13 @@
   },
   "homepage": "https://github.com/evan-king/promise-apply-spec#readme",
   "dependencies": {
-    "ramda": "^0.25.0"
+    "ramda": "^0.26.1"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "mocha": "^5.2.0",
-    "nyc": "^13.0.1",
+    "nyc": "^13.1.0",
     "uglify-es": "^3.3.9"
   }
 }
