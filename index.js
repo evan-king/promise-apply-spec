@@ -141,9 +141,9 @@
     function Fluent(opts) {
         opts = opts || {};
         return {
-            repeat: v => Fluent(R.merge(opts, {once: !v})),
-            apply: v => Fluent(R.merge(opts, {apply: !!v})),
-            resolve: v => Fluent(R.merge(opts, {resolve: !!v})),
+            repeating: v => Fluent(R.merge(opts, {once: !v})),
+            applying: v => Fluent(R.merge(opts, {apply: !!v})),
+            resolving: v => Fluent(R.merge(opts, {resolve: !!v})),
             applyTo: v => Fluent(R.merge(opts, {apply: true, args: v})),
             withSpec: v => Fluent(R.merge(opts, {spec: v})),
             exec: (spec, args, options) => applySpecP(

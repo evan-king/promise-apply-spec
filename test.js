@@ -227,8 +227,8 @@ describe('PromiseApplySpec', function() {
         const root = applySpecP;
         
         const isFluent = obj => R.map(
-            key => expect(obj[key]).a('Function'),
-            ['once', 'apply', 'resolve', 'applyTo', 'withSpec']
+            key => expect(obj[key], key).a('Function'),
+            ['repeating', 'applying', 'resolving', 'applyTo', 'withSpec']
         );
         
         it('is available from the default import', () => isFluent(applySpecP));
@@ -237,7 +237,7 @@ describe('PromiseApplySpec', function() {
             expect(root.exec()).eventually.eql(undefined);
         });
         
-        it('sets once with `options` or .repeat(bool)', tracked(function(track) {
+        it('sets once with `options` or .repeating(bool)', tracked(function(track) {
             const
                 inner = {b: wrap(1)},
                 outer = {a: wrap(inner)},
@@ -247,48 +247,48 @@ describe('PromiseApplySpec', function() {
             track(expectResult(full), [
                 root.exec(outer),
                 root.exec(outer, null, {once: false}),
-                root.repeat(true).exec(outer),
-                root.repeat(false).exec(outer, null, {once: false}),
+                root.repeating(true).exec(outer),
+                root.repeating(false).exec(outer, null, {once: false}),
             ]);
             
             track(expectResult(single), [
-                root.repeat(false).exec(outer),
+                root.repeating(false).exec(outer),
                 root.exec(outer, null, {once: true}),
-                root.repeat(true).exec(outer, null, {once: true}),
+                root.repeating(true).exec(outer, null, {once: true}),
             ]);
         }));
         
-        it('sets apply with `options` or .apply(bool)', tracked(function(track) {
+        it('sets apply with `options` or .applying(bool)', tracked(function(track) {
             const orig = {a: id}, expanded = {a: 1};
             
             track(expectResult(expanded), [
                 root.exec(orig, [1]),
                 root.exec(orig, [1], {apply: true}),
-                root.apply(true).exec(orig, [1]),
-                root.apply(false).exec(orig, [1], {apply: true}),
+                root.applying(true).exec(orig, [1]),
+                root.applying(false).exec(orig, [1], {apply: true}),
             ]);
             
             track(expectResult(orig), [
                 root.exec(orig, [1], {apply: false}),
-                root.apply(false).exec(orig, [1]),
-                root.apply(true).exec(orig, [1], {apply: false}),
+                root.applying(false).exec(orig, [1]),
+                root.applying(true).exec(orig, [1], {apply: false}),
             ]);
         }));
         
-        it('sets resolve with `options` or .resolve(bool)', tracked(function(track) {
+        it('sets resolve with `options` or .resolving(bool)', tracked(function(track) {
             const orig = {a: wrap(1)}, expanded = {a: 1};
             
             track(expectResult(expanded), [
                 root.exec(orig, [1]),
                 root.exec(orig, [1], {resolve: true}),
-                root.resolve(true).exec(orig, [1]),
-                root.resolve(false).exec(orig, [1], {resolve: true}),
+                root.resolving(true).exec(orig, [1]),
+                root.resolving(false).exec(orig, [1], {resolve: true}),
             ]);
             
             track(expectResult(orig), [
                 root.exec(orig, [1], {resolve: false}),
-                root.resolve(false).exec(orig, [1]),
-                root.resolve(true).exec(orig, [1], {resolve: false}),
+                root.resolving(false).exec(orig, [1]),
+                root.resolving(true).exec(orig, [1], {resolve: false}),
             ].map(v => wrap(v)));
         }));
         
@@ -299,13 +299,13 @@ describe('PromiseApplySpec', function() {
                 root.exec(orig, [1]),
                 root.applyTo([1]).exec(orig),
                 root.applyTo([2]).exec(orig, [1]),
-                root.apply(false).applyTo([1]).exec(orig),
-                root.apply(false).applyTo([3]).exec(orig, [1]),
+                root.applying(false).applyTo([1]).exec(orig),
+                root.applying(false).applyTo([3]).exec(orig, [1]),
             ]);
             
             track(expectResult(orig), [
-                root.applyTo([1]).apply(false).exec(orig),
-                root.applyTo([1]).apply(false).exec(orig, [1]),
+                root.applyTo([1]).applying(false).exec(orig),
+                root.applyTo([1]).applying(false).exec(orig, [1]),
             ]);
         }));
         
@@ -324,7 +324,7 @@ describe('PromiseApplySpec', function() {
             const toExpanded = root.withSpec(orig).applyTo([1]);
             const toDifferent = toExpanded.applyTo([2]);
             
-            toExpanded.withSpec({}).applyTo([3]).apply(false);
+            toExpanded.withSpec({}).applyTo([3]).applying(false);
             
             track(expectResult(expanded), [toExpanded.exec()]);
             track(expectResult(differentArg), [toDifferent.exec()]);
@@ -336,7 +336,7 @@ describe('PromiseApplySpec', function() {
         const root = applySpecP;
         
         const isFP = obj => R.map(
-            key => expect(obj[key]).a('Function'),
+            key => expect(obj[key], key).a('Function'),
             ['all', 'once', 'applySpec', 'unravel', 'unravelOnce']
         );
         

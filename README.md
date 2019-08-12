@@ -130,15 +130,15 @@ Get a new immutable Fluent with default `args` provided and `options.apply = tru
 
 Get a new immutable Fluent with default `spec` provided.
 
-#### Fluent.repeat(Boolean) ⇒ Fluent
+#### Fluent.repeating(Boolean) ⇒ Fluent
 
 Get a new immutable Fluent with `options.once` reconfigured.
 
-#### Fluent.apply(Boolean) ⇒ Fluent
+#### Fluent.applying(Boolean) ⇒ Fluent
 
 Get a new immutable Fluent with `options.apply` reconfigured.
 
-#### Fluent.resolve(Boolean) ⇒ Fluent
+#### Fluent.resolving(Boolean) ⇒ Fluent
 
 Get a new immutable Fluent with `options.resolve` reconfigured.
 
